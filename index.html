@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2択クイズ - AEDの使用</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+            text-align: center;
+        }
+        .container {
+            max-width: 400px;
+            margin: auto;
+            display: none;
+        }
+        .active {
+            display: block;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <div id="question1" class="container active">
+        <h2>質問1: 倒れている人がいます。どちらの番号にかけるのが正解でしょうか？</h2>
+        <input type="radio" name="q1" value="110番">110番<br>
+        <input type="radio" name="q1" value="119番">119番<br><br>
+        <button onclick="nextQuestion(1)">次へ</button>
+    </div>
+    
+    <div id="question2" class="container">
+        <h2>質問2: 倒れている人がいます。まず何をする？</h2>
+        <input type="radio" name="q2" value="周囲の安全を確認する">周囲の安全を確認する<br>
+        <input type="radio" name="q2" value="すぐにAEDを持ってくる">すぐにAEDを持ってくる<br><br>
+        <button onclick="nextQuestion(2)">次へ</button>
+    </div>
+    
+    <div id="question3" class="container">
+        <h2>質問3: AEDのパッドを貼る前にすることは？</h2>
+        <input type="radio" name="q3" value="衣服を脱がせる">衣服を脱がせる<br>
+        <input type="radio" name="q3" value="電源を入れる">電源を入れる<br><br>
+        <button onclick="nextQuestion(3)">次へ</button>
+    </div>
+    
+    <div id="question4" class="container">
+        <h2>質問4: 救急隊員が到着するまでにすることは？</h2>
+        <input type="radio" name="q4" value="まずはAEDを持ってくる">まずはAEDを持ってくる<br>
+        <input type="radio" name="q4" value="まずは人工呼吸する">まずは人工呼吸する<br><br>
+        <button onclick="nextQuestion(4)">次へ</button>
+    </div>
+
+    <div id="question5" class="container">
+        <h2>質問5: 電気ショックが必要かどうか判断するのは？</h2>
+        <input type="radio" name="q5" value="AEDが自動で判断する">AEDが自動で判断する<br>
+        <input type="radio" name="q5" value="救助者が目視で判断する">救助者が目視で判断する<br><br>
+        <button onclick="showResults()">結果を見る</button>
+    </div>
+
+    <div id="resultPage" class="container">
+        <h2>クイズ結果</h2>
+        <div id="result" class="result"></div>
+        <button onclick="restartQuiz()">もう一度</button>
+    </div>
+    
+    <script>
+        const correctAnswers = {
+            q1: "119番",
+            q2: "周囲の安全を確認する",
+            q3: "衣服を脱がせる",
+            q4: "まずはAEDを持ってくる",
+            q5: "AEDが自動で判断する"
+        };
+
+        function nextQuestion(current) {
+            const question = document.getElementById(`question${current}`);
+            const next = document.getElementById(`question${current + 1}`);
+            const selected = document.querySelector(`input[name="q${current}"]:checked`);
+            
+            if (!selected) {
+                alert("選択肢を選んでください。");
+                return;
+            }
+            
+            question.classList.remove('active');
+            next.classList.add('active');
+        }
+        
+        function showResults() {
+            let score = 0;
+            let resultHTML = "<h3>あなたの回答</h3>";
+
+            for (let i = 1; i <= 5; i++) {
+                const selected = document.querySelector(`input[name="q${i}"]:checked`);
+                if (!selected) {
+                    alert("すべての質問に答えてください。");
+                    return;
+                }
+
+                const userAnswer = selected.value;
+                const correctAnswer = correctAnswers[`q${i}`];
+
+                if (userAnswer === correctAnswer) {
+                    score++;
+                    resultHTML += `<p>質問${i}: ✅ ${userAnswer}（正解）</p>`;
+                } else {
+                    resultHTML += `<p>質問${i}: ❌ ${userAnswer}（正解は: ${correctAnswer}）</p>`;
+                }
+            }
+
+            const percentage = (score / 5) * 100;
+            let rank = "";
+
+            if (percentage === 100) {
+                rank = "Sランク（完璧！）";
+            } else if (percentage >= 80) {
+                rank = "Aランク（素晴らしい！）";
+            } else if (percentage >= 60) {
+                rank = "Bランク（もう少し！）";
+            } else {
+                rank = "Cランク（頑張ろう！）";
+            }
+
+            resultHTML += `<h3>正答率: ${percentage}%</h3>`;
+            resultHTML += `<h3>ランク: ${rank}</h3>`;
+
+            document.getElementById('question5').classList.remove('active');
+            document.getElementById('resultPage').classList.add('active');
+            document.getElementById('result').innerHTML = resultHTML;
+        }
+        
+        function restartQuiz() {
+            document.getElementById('resultPage').classList.remove('active');
+            document.getElementById('question1').classList.add('active');
+            document.querySelectorAll('input[type="radio"]').forEach(input => input.checked = false);
+        }
+    </script>
+</body>
+</html>
