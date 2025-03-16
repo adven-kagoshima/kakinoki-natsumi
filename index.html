@@ -6,59 +6,139 @@
     <title>2択クイズ - AEDの使用</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            padding: 20px;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f0e3;
+            color: #333;
             text-align: center;
         }
+        .header {
+            background-color: #f4a1c7;
+            padding: 20px 0;
+            color: white;
+            font-size: 2em;
+            font-weight: bold;
+            border-bottom: 5px solid #f4a1c7;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
         .container {
-            max-width: 400px;
+            max-width: 600px;
             margin: auto;
             display: none;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
         }
         .active {
             display: block;
         }
+        .options {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin-top: 20px;
+        }
+        .option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        .option img {
+            width: 150px;
+            height: 150px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        .option img:hover {
+            transform: scale(1.1);
+        }
+        button {
+            background-color: #ff89b0;
+            color: white;
+            font-size: 1.2em;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #ff6f94;
+        }
         .result {
             margin-top: 20px;
             padding: 10px;
-            border: 1px solid #ccc;
+            background-color: #ffe1eb;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .result h3 {
+            color: #f4a1c7;
+            font-size: 1.5em;
+        }
+        .result p {
+            font-size: 1.2em;
+            margin: 10px 0;
+        }
+        .result p span {
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
+
+    <div class="header">
+        AED使用クイズ！安全に学ぼう
+    </div>
+    
     <div id="question1" class="container active">
         <h2>質問1: 倒れている人がいます。どちらの番号にかけるのが正解でしょうか？</h2>
-        <input type="radio" name="q1" value="110番">110番<br>
-        <input type="radio" name="q1" value="119番">119番<br><br>
+        <div class="options">
+            <label class="option"><img src="images/1_1.jpg" alt="110番"> <span>110番</span> <input type="radio" name="q1" value="110番"></label>
+            <label class="option"><img src="images/1_2.jpg" alt="119番"> <span>119番</span> <input type="radio" name="q1" value="119番"></label>
+        </div>
         <button onclick="nextQuestion(1)">次へ</button>
     </div>
     
     <div id="question2" class="container">
         <h2>質問2: 倒れている人がいます。まず何をする？</h2>
-        <input type="radio" name="q2" value="周囲の安全を確認する">周囲の安全を確認する<br>
-        <input type="radio" name="q2" value="すぐにAEDを持ってくる">すぐにAEDを持ってくる<br><br>
+        <div class="options">
+            <label class="option"><img src="images/2_1.jpg" alt="周囲の安全を確認する"> <span>周囲の安全を確認する</span> <input type="radio" name="q2" value="周囲の安全を確認する"></label>
+            <label class="option"><img src="images/2_2.jpg" alt="すぐにAEDを持ってくる"> <span>すぐにAEDを持ってくる</span> <input type="radio" name="q2" value="すぐにAEDを持ってくる"></label>
+        </div>
         <button onclick="nextQuestion(2)">次へ</button>
     </div>
     
     <div id="question3" class="container">
         <h2>質問3: AEDのパッドを貼る前にすることは？</h2>
-        <input type="radio" name="q3" value="衣服を脱がせる">衣服を脱がせる<br>
-        <input type="radio" name="q3" value="電源を入れる">電源を入れる<br><br>
+        <div class="options">
+            <label class="option"><img src="images/3_1.jpg" alt="衣服を脱がせる"> <span>衣服を脱がせる</span> <input type="radio" name="q3" value="衣服を脱がせる"></label>
+            <label class="option"><img src="images/3_2.jpg" alt="電源を入れる"> <span>電源を入れる</span> <input type="radio" name="q3" value="電源を入れる"></label>
+        </div>
         <button onclick="nextQuestion(3)">次へ</button>
     </div>
     
     <div id="question4" class="container">
         <h2>質問4: 救急隊員が到着するまでにすることは？</h2>
-        <input type="radio" name="q4" value="まずはAEDを持ってくる">まずはAEDを持ってくる<br>
-        <input type="radio" name="q4" value="まずは人工呼吸する">まずは人工呼吸する<br><br>
+        <div class="options">
+            <label class="option"><img src="images/4_1.jpg" alt="まずはAEDを持ってくる"> <span>まずはAEDを持ってくる</span> <input type="radio" name="q4" value="まずはAEDを持ってくる"></label>
+            <label class="option"><img src="images/4_2.jpg" alt="まずは人工呼吸する"> <span>まずは人工呼吸する</span> <input type="radio" name="q4" value="まずは人工呼吸する"></label>
+        </div>
         <button onclick="nextQuestion(4)">次へ</button>
     </div>
 
     <div id="question5" class="container">
         <h2>質問5: 電気ショックが必要かどうか判断するのは？</h2>
-        <input type="radio" name="q5" value="AEDが自動で判断する">AEDが自動で判断する<br>
-        <input type="radio" name="q5" value="救助者が目視で判断する">救助者が目視で判断する<br><br>
+        <div class="options">
+            <label class="option"><img src="images/5_1.jpg" alt="AEDが自動で判断する"> <span>AEDが自動で判断する</span> <input type="radio" name="q5" value="AEDが自動で判断する"></label>
+            <label class="option"><img src="images/5_2.jpg" alt="救助者が目視で判断する"> <span>救助者が目視で判断する</span> <input type="radio" name="q5" value="救助者が目視で判断する"></label>
+        </div>
         <button onclick="showResults()">結果を見る</button>
     </div>
 
@@ -140,5 +220,6 @@
             document.querySelectorAll('input[type="radio"]').forEach(input => input.checked = false);
         }
     </script>
+
 </body>
 </html>
